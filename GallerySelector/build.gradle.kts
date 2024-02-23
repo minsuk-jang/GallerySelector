@@ -43,4 +43,7 @@ dependencies {
 
     // optional - Jetpack Compose integration
     implementation("androidx.paging:paging-compose:3.2.1")
+
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 }

@@ -17,11 +17,10 @@ import kotlinx.coroutines.flow.Flow
  *
  * Local data source
  */
-class LocalDataSource(
+class LocalGalleryDataSource(
     private val context: Context,
     private val galleryStream: GalleryPagingStream
 ) {
-
     fun getLocalGalleryImages(
         page: Int = 0,
         pageSize: Int = Constants.DEFAULT_PAGE_SiZE
