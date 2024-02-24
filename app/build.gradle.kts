@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.jms.galleryselector"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.jms.galleryselector"
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    //implementation(project(":GallerySelector"))
+    implementation(project(":GallerySelector"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
