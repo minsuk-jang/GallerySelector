@@ -10,12 +10,12 @@ import androidx.core.os.bundleOf
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.jms.galleryselector.Constants
-import com.jms.galleryselector.model.Gallery
+import com.jms.galleryselector.model.GalleryImage
 import kotlinx.coroutines.flow.Flow
 
 /**
  *
- * Local data source
+ * Local Gallery data source
  */
 class LocalGalleryDataSource(
     private val context: Context,
@@ -24,7 +24,7 @@ class LocalGalleryDataSource(
     fun getLocalGalleryImages(
         page: Int = 0,
         pageSize: Int = Constants.DEFAULT_PAGE_SiZE
-    ): Flow<PagingData<Gallery>> {
+    ): Flow<PagingData<GalleryImage>> {
         return galleryStream.load {
             val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
@@ -45,15 +45,20 @@ class LocalGalleryDataSource(
                         val dateAt =
                             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN))
 
+                        val uri = Uri.withAppendedPath(
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            id.toString()
+                        )
                         val data =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
 
                         add(
-                            Gallery(
+                            GalleryImage(
                                 id = id,
                                 title = title,
                                 dateAt = dateAt,
-                                data = data
+                                data = data,
+                                uri = uri
                             )
                         )
                     }

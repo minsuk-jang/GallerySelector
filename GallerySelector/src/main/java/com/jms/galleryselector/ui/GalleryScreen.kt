@@ -1,7 +1,5 @@
 package com.jms.galleryselector.ui
 
-import android.net.Uri
-import android.provider.MediaStore
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -13,7 +11,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.jms.galleryselector.data.GalleryPagingStream
 import com.jms.galleryselector.data.LocalGalleryDataSource
-import com.jms.galleryselector.model.Gallery
+import com.jms.galleryselector.model.GalleryImage
 import kotlinx.coroutines.Dispatchers
 
 @Composable
@@ -38,7 +36,7 @@ fun GalleryScreen() {
 
 @Composable
 private fun GalleryScreen(
-    images: LazyPagingItems<Gallery>
+    images: LazyPagingItems<GalleryImage>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2)
@@ -48,13 +46,9 @@ private fun GalleryScreen(
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .crossfade(true)
-                        .data(
-                            Uri.withAppendedPath(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                it.id.toString()
-                            )
-                        )
-                        .build(), contentDescription = null
+                        .data(it.uri)
+                        .build(),
+                    contentDescription = null
                 )
             }
         }
