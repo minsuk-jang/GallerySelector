@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.jms.galleryselector.Constants
 import kotlinx.coroutines.flow.Flow
 
 
@@ -14,7 +15,7 @@ class GalleryPagingStream {
         block: suspend (PagingSource.LoadParams<Key>) -> PagingSource.LoadResult<Key, Value>
     ): Flow<PagingData<Value>> {
         return Pager(
-            config = createConfig(pageSize = DEFAULT_BUFFER_SIZE)
+            config = createConfig(pageSize = Constants.DEFAULT_PAGE_SiZE)
         ) {
             GalleryPagingSource(block = block)
         }.flow

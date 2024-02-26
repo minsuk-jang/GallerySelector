@@ -49,10 +49,6 @@ class MainActivity : ComponentActivity() {
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
                         GalleryScreen()
-                    } else {
-                        LaunchedEffect(key1 = Unit) {
-                            contracts.launch(arrays)
-                        }
                     }
                 }
             }
