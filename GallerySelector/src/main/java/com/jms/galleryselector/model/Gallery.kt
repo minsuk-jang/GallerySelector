@@ -7,5 +7,7 @@ data class GalleryImage(
     val title: String,
     val dateAt: Long,
     val data: String,
-    val uri: Uri
+    val uri: Uri,
+    val mimeType: String,
+    val album: String
 )

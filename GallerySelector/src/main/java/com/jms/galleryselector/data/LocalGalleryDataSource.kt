@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
@@ -52,13 +53,21 @@ class LocalGalleryDataSource(
                         val data =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
 
+                        val mimeType =
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE))
+
+                        val album =
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.ALBUM))
+
                         add(
                             GalleryImage(
                                 id = id,
                                 title = title,
                                 dateAt = dateAt,
                                 data = data,
-                                uri = uri
+                                uri = uri,
+                                mimeType = mimeType,
+                                album = album
                             )
                         )
                     }
@@ -109,7 +118,9 @@ class LocalGalleryDataSource(
             MediaStore.Images.ImageColumns._ID,
             MediaStore.Images.ImageColumns.TITLE,
             MediaStore.Images.ImageColumns.DATE_TAKEN,
-            MediaStore.Images.ImageColumns.DATA
+            MediaStore.Images.ImageColumns.DATA,
+            MediaStore.Images.ImageColumns.MIME_TYPE,
+            MediaStore.Images.ImageColumns.ALBUM
         )
     }
 }

@@ -12,6 +12,7 @@ import coil.request.ImageRequest
  *
  * Gallery cell
  */
+/*
 @Composable
 fun GalleryCell(
     modifier: Modifier = Modifier,
@@ -26,4 +27,4 @@ fun GalleryCell(
             contentDescription = null
         )
     }
-}
+}*/

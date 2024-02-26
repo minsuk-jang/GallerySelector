@@ -9,6 +9,6 @@ class GalleryScreenViewModel constructor(
     private val localGalleryDataSource: LocalGalleryDataSource
 ) : ViewModel() {
 
-    val images = localGalleryDataSource.getLocalGalleryImages()
+    val images = localGalleryDataSource.getLocalGalleryImages(page = 1)
         .cachedIn(viewModelScope)
 }
