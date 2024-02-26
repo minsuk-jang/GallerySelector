@@ -15,7 +15,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.jms.galleryselector.data.GalleryPagingStream
 import com.jms.galleryselector.data.LocalGalleryDataSource
-import com.jms.galleryselector.model.GalleryImage
+import com.jms.galleryselector.model.Image
 import kotlinx.coroutines.Dispatchers
 
 @Composable
@@ -40,7 +40,7 @@ fun GalleryScreen() {
 
 @Composable
 private fun GalleryScreen(
-    images: LazyPagingItems<GalleryImage>
+    images: LazyPagingItems<Image>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3)
