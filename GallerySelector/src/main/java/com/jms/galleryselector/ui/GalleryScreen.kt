@@ -1,26 +1,23 @@
 package com.jms.galleryselector.ui
 
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.AsyncImage
-import coil.request.CachePolicy
-import coil.request.ImageRequest
+import com.jms.galleryselector.component.ImageCell
 import com.jms.galleryselector.data.GalleryPagingStream
 import com.jms.galleryselector.data.LocalGalleryDataSource
-import com.jms.galleryselector.model.GalleryImage
+import com.jms.galleryselector.model.Image
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun GalleryScreen() {
+fun GalleryScreen(
+    selectFrame: @Composable () -> Unit
+) {
     val context = LocalContext.current
     val viewModel: GalleryScreenViewModel = viewModel {
         GalleryScreenViewModel(
@@ -41,9 +38,8 @@ fun GalleryScreen() {
 
 @Composable
 private fun GalleryScreen(
-    images: LazyPagingItems<GalleryImage>
+    images: LazyPagingItems<Image>
 ) {
-
     when {
         images.itemCount > 0 -> {
             LazyVerticalGrid(
@@ -51,18 +47,9 @@ private fun GalleryScreen(
             ) {
                 items(images.itemCount, key = { it }) {
                     images[it]?.let {
-                        AsyncImage(
-                            modifier = Modifier.aspectRatio(1f),
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .crossfade(true)
-                                .data(it.uri)
-                                .memoryCachePolicy(CachePolicy.ENABLED)
-                                .diskCachePolicy(CachePolicy.ENABLED)
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            filterQuality = FilterQuality.Low
-                        )
+                        Box {
+                            ImageCell(image = it)
+                        }
                     }
                 }
             }
