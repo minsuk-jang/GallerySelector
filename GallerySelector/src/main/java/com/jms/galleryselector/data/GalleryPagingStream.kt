@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 //TODO: add parameters
-class GalleryPagingStream {
+internal class GalleryPagingStream {
     fun <Key : Any, Value : Any> load(
         block: suspend (PagingSource.LoadParams<Key>) -> PagingSource.LoadResult<Key, Value>
     ): Flow<PagingData<Value>> {

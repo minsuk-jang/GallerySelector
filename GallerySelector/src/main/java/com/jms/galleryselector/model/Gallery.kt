@@ -2,7 +2,7 @@ package com.jms.galleryselector.model
 
 import android.net.Uri
 
-data class Image(
+internal data class Image(
     val id: Long,
     val title: String,
     val dateAt: Long,

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * Local Gallery data source
  */
-class LocalGalleryDataSource(
+internal class LocalGalleryDataSource(
     private val context: Context,
     private val galleryStream: GalleryPagingStream
 ) {
