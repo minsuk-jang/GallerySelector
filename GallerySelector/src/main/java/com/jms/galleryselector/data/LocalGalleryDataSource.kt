@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
@@ -22,19 +23,18 @@ class LocalGalleryDataSource(
     private val galleryStream: GalleryPagingStream
 ) {
     fun getLocalGalleryImages(
-        page: Int = 0,
+        page: Int = 1,
         pageSize: Int = Constants.DEFAULT_PAGE_SiZE
     ): Flow<PagingData<Image>> {
         return galleryStream.load {
             val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
             val _page = it.key ?: page
-            val _size = pageSize
 
             getCursor(
                 uri = uri,
-                offset = (_page - 1) * _size,
-                limit = _size
+                offset = (_page - 1) * pageSize,
+                limit = pageSize
             )?.use { cursor ->
                 val list = buildList {
                     while (cursor.moveToNext()) {
@@ -45,18 +45,27 @@ class LocalGalleryDataSource(
                         val dateAt =
                             cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN))
 
+                        val mimeType =
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE))
+
                         val uri = Uri.withAppendedPath(
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                             id.toString()
                         )
+
                         val data =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
 
-                        val mimeType =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE))
-
                         val album =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.ALBUM))
+                        Log.d(
+                            "jms8732",
+                            "mimeType: $mimeType\n" +
+                                    "data: $data\n" +
+                                    "dateAt: $dateAt\n" +
+                                    "title: $title\n" +
+                                    "id: $id",
+                        )
 
                         add(
                             Image(
