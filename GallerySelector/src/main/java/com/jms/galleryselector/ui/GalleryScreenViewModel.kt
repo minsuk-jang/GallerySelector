@@ -14,6 +14,7 @@ import com.jms.galleryselector.model.toImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 
 internal class GalleryScreenViewModel constructor(
     private val localGalleryDataSource: LocalGalleryDataSource
@@ -31,13 +32,19 @@ internal class GalleryScreenViewModel constructor(
             .cachedIn(viewModelScope)
             .combinePagingEvent(events = _events, update = ::update)
 
+    fun select(image: Gallery.Image) {
+        _events.update {
+            it.toMutableList().apply {
+
+            }
+        }
+    }
 
     private fun update(
         pagingData: PagingData<Gallery.Image>,
         event: PagingEvent.Update<Long>
     ): PagingData<Gallery.Image> {
         return pagingData.map {
-            it.id
         }
     }
 }

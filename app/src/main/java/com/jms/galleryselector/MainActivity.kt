@@ -1,7 +1,6 @@
 package com.jms.galleryselector
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -9,13 +8,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import com.jms.galleryselector.ui.GalleryScreen
 import com.jms.galleryselector.ui.theme.GallerySelectorTheme
 
@@ -48,7 +48,12 @@ class MainActivity : ComponentActivity() {
                             arrays[0]
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        GalleryScreen()
+                        GalleryScreen{
+                            Image(
+                                painter = painterResource(id = R.drawable.abc_ab_share_pack_mtrl_alpha),
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }
