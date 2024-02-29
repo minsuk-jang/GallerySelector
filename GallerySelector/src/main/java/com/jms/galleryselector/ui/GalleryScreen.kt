@@ -15,9 +15,7 @@ import com.jms.galleryselector.model.Image
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun GalleryScreen(
-    selectFrame: @Composable () -> Unit
-) {
+fun GalleryScreen() {
     val context = LocalContext.current
     val viewModel: GalleryScreenViewModel = viewModel {
         GalleryScreenViewModel(
@@ -31,7 +29,7 @@ fun GalleryScreen(
     val images = viewModel.images.collectAsLazyPagingItems(context = Dispatchers.Default)
 
     GalleryScreen(
-        images = images
+        images = images,
     )
 }
 
