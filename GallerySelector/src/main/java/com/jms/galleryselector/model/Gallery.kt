@@ -2,7 +2,7 @@ package com.jms.galleryselector.model
 
 import android.net.Uri
 
-internal data class Image(
+internal data class ImageEntity(
     val id: Long,
     val title: String,
     val dateAt: Long,
@@ -11,3 +11,31 @@ internal data class Image(
     val mimeType: String,
     val album: String
 )
+
+
+sealed interface Gallery {
+
+    data class Image(
+        val id: Long,
+        val title: String,
+        val dateAt: Long,
+        val data: String,
+        val uri: Uri,
+        val mimeType: String,
+        val album: String,
+        val isSelected: Boolean = false
+    ) : Gallery
+}
+
+
+internal fun ImageEntity.toImage(): Gallery.Image {
+    return Gallery.Image(
+        id = id,
+        title = title,
+        dateAt = dateAt,
+        data = data,
+        uri = uri,
+        mimeType = mimeType,
+        album = album
+    )
+}

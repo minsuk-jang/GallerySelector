@@ -5,13 +5,15 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.jms.galleryselector.component.ImageCell
 import com.jms.galleryselector.data.GalleryPagingStream
 import com.jms.galleryselector.data.LocalGalleryDataSource
-import com.jms.galleryselector.model.Image
+import com.jms.galleryselector.model.Gallery
+import com.jms.galleryselector.model.ImageEntity
 import kotlinx.coroutines.Dispatchers
 
 @Composable
@@ -36,7 +38,7 @@ fun GalleryScreen() {
 
 @Composable
 private fun GalleryScreen(
-    images: LazyPagingItems<Image>
+    images: LazyPagingItems<Gallery.Image>
 ) {
     when {
         images.itemCount > 0 -> {
@@ -48,9 +50,17 @@ private fun GalleryScreen(
                         Box {
                             ImageCell(image = it)
                         }
+
+                        if (it.isSelected)
+                            androidx.compose.foundation.Image(
+                                painter = painterResource(id = androidx.appcompat.R.drawable.abc_ab_share_pack_mtrl_alpha),
+                                contentDescription = null
+                            )
                     }
                 }
             }
         }
     }
+}
+}
 }

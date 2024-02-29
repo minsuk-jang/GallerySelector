@@ -11,7 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.jms.galleryselector.Constants
-import com.jms.galleryselector.model.Image
+import com.jms.galleryselector.model.ImageEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -25,7 +25,7 @@ internal class LocalGalleryDataSource(
     fun getLocalGalleryImages(
         page: Int = 1,
         pageSize: Int = Constants.DEFAULT_PAGE_SiZE
-    ): Flow<PagingData<Image>> {
+    ): Flow<PagingData<ImageEntity>> {
         return galleryStream.load {
             val uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
@@ -57,18 +57,20 @@ internal class LocalGalleryDataSource(
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA))
 
                         val album =
-                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.ALBUM))
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
+
                         Log.d(
                             "jms8732",
                             "mimeType: $mimeType\n" +
                                     "data: $data\n" +
                                     "dateAt: $dateAt\n" +
                                     "title: $title\n" +
-                                    "id: $id",
+                                    "id: $id\n" +
+                                    "album: $album",
                         )
 
                         add(
-                            Image(
+                            ImageEntity(
                                 id = id,
                                 title = title,
                                 dateAt = dateAt,
@@ -128,7 +130,7 @@ internal class LocalGalleryDataSource(
             MediaStore.Images.ImageColumns.DATE_TAKEN,
             MediaStore.Images.ImageColumns.DATA,
             MediaStore.Images.ImageColumns.MIME_TYPE,
-            MediaStore.Images.ImageColumns.ALBUM
+            MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
         )
     }
 }
