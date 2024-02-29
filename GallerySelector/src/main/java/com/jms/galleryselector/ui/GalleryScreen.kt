@@ -73,5 +73,3 @@ private fun GalleryScreen(
         }
     }
 }
-}
-}

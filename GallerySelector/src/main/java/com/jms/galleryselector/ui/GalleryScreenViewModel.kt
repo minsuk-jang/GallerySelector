@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.map
 import com.jms.galleryselector.data.LocalGalleryDataSource
 import com.jms.galleryselector.model.Gallery
@@ -35,7 +36,7 @@ internal class GalleryScreenViewModel constructor(
     fun select(image: Gallery.Image) {
         _events.update {
             it.toMutableList().apply {
-
+                add(PagingEvent.Update(data = image.id))
             }
         }
     }
@@ -45,6 +46,9 @@ internal class GalleryScreenViewModel constructor(
         event: PagingEvent.Update<Long>
     ): PagingData<Gallery.Image> {
         return pagingData.map {
+            it.copy(
+                isSelected = it.id == event.data
+            )
         }
     }
 }
