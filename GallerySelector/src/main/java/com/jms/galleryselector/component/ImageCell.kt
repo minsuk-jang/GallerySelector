@@ -10,7 +10,6 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.jms.galleryselector.model.Gallery
-import com.jms.galleryselector.model.ImageEntity
 
 
 /**

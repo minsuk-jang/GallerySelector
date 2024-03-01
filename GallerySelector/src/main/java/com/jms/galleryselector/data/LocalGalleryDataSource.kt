@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
@@ -58,16 +57,6 @@ internal class LocalGalleryDataSource(
 
                         val album =
                             cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME))
-
-                        Log.d(
-                            "jms8732",
-                            "mimeType: $mimeType\n" +
-                                    "data: $data\n" +
-                                    "dateAt: $dateAt\n" +
-                                    "title: $title\n" +
-                                    "id: $id\n" +
-                                    "album: $album",
-                        )
 
                         add(
                             ImageEntity(
