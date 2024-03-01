@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.jms.galleryselector.model.Gallery
 import com.jms.galleryselector.model.ImageEntity
@@ -26,6 +27,7 @@ internal fun ImageCell(
         model = ImageRequest.Builder(LocalContext.current)
             .crossfade(true)
             .allowHardware(true)
+            .memoryCachePolicy(CachePolicy.ENABLED)
             .data(image.uri)
             .build(),
         contentDescription = null,
