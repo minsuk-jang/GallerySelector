@@ -1,53 +1,61 @@
 package com.jms.galleryselector.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.filter
 import androidx.paging.map
+import com.jms.galleryselector.Constants
 import com.jms.galleryselector.data.LocalGalleryDataSource
 import com.jms.galleryselector.model.Gallery
-import com.jms.galleryselector.model.ImageEntity
-import com.jms.galleryselector.model.PagingEvent
-import com.jms.galleryselector.model.combinePagingEvent
 import com.jms.galleryselector.model.toImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
 internal class GalleryScreenViewModel constructor(
-    private val localGalleryDataSource: LocalGalleryDataSource
+    localGalleryDataSource: LocalGalleryDataSource
 ) : ViewModel() {
 
-    private val _events = MutableStateFlow<List<PagingEvent<Long>>>(mutableListOf())
+    //selected gallery ids
+    private val _selectedIds = MutableStateFlow<List<Long>>(mutableListOf())
 
     val images: Flow<PagingData<Gallery.Image>> =
         localGalleryDataSource.getLocalGalleryImages(page = 1)
             .map {
-                it.map {
-                    it.toImage()
-                }
+                it.map { it.toImage() }
             }
             .cachedIn(viewModelScope)
-            .combinePagingEvent(events = _events, update = ::update)
+            .combine(_selectedIds) { data, ids ->
+                update(pagingData = data, selectedIds = ids)
+            }
 
     fun select(image: Gallery.Image) {
-        _events.update {
+        _selectedIds.update {
             it.toMutableList().apply {
-                add(PagingEvent.Update(data = image.id))
+                val result = remove(image.id)
+
+                if (!result) {
+                    add(image.id)
+                }
             }
         }
     }
 
     private fun update(
         pagingData: PagingData<Gallery.Image>,
-        event: PagingEvent.Update<Long>
+        selectedIds: List<Long>
     ): PagingData<Gallery.Image> {
         return pagingData.map {
             it.copy(
-                isSelected = it.id == event.data
+                selectedOrder = if (selectedIds.contains(it.id)) {
+                    selectedIds.indexOf(
+                        it.id
+                    )
+                } else Constants.NO_ORDER
             )
         }
     }

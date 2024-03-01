@@ -7,20 +7,19 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.jms.galleryselector.Constants
 import com.jms.galleryselector.component.ImageCell
 import com.jms.galleryselector.data.GalleryPagingStream
 import com.jms.galleryselector.data.LocalGalleryDataSource
 import com.jms.galleryselector.model.Gallery
-import com.jms.galleryselector.model.ImageEntity
 import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun GalleryScreen(
-    selectFrame: @Composable () -> Unit
+    selectFrame: @Composable (Gallery.Image) -> Unit
 ) {
     val context = LocalContext.current
     val viewModel: GalleryScreenViewModel = viewModel {
@@ -46,7 +45,7 @@ fun GalleryScreen(
 
 @Composable
 private fun GalleryScreen(
-    selectFrame: @Composable () -> Unit,
+    selectFrame: @Composable (Gallery.Image) -> Unit,
     images: LazyPagingItems<Gallery.Image>,
     onClick: (Gallery.Image) -> Unit
 ) {
@@ -63,10 +62,10 @@ private fun GalleryScreen(
                             }
                         ) {
                             ImageCell(image = it)
-                        }
 
-                        if (it.isSelected)
-                            selectFrame()
+                            if (it.selectedOrder != Constants.NO_ORDER)
+                                selectFrame(it)
+                        }
                     }
                 }
             }

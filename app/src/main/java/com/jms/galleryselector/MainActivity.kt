@@ -2,19 +2,23 @@ package com.jms.galleryselector
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.R
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.jms.galleryselector.ui.GalleryScreen
 import com.jms.galleryselector.ui.theme.GallerySelectorTheme
@@ -48,11 +52,16 @@ class MainActivity : ComponentActivity() {
                             arrays[0]
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        GalleryScreen{
-                            Image(
-                                painter = painterResource(id = R.drawable.abc_ab_share_pack_mtrl_alpha),
-                                contentDescription = null
-                            )
+                        GalleryScreen {
+                            Box(
+                                modifier = Modifier.fillMaxSize()
+                            ) {
+                                Text(
+                                    text = "${it.selectedOrder}",
+                                    modifier = Modifier.align(Alignment.TopEnd),
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
                         }
                     }
                 }

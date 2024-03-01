@@ -1,6 +1,7 @@
 package com.jms.galleryselector.model
 
 import android.net.Uri
+import com.jms.galleryselector.Constants
 
 internal data class ImageEntity(
     val id: Long,
@@ -23,7 +24,7 @@ sealed interface Gallery {
         val uri: Uri,
         val mimeType: String,
         val album: String,
-        val isSelected: Boolean = false
+        val selectedOrder: Int = Constants.NO_ORDER
     ) : Gallery
 }
 
