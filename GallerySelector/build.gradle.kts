@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
 
 android {
@@ -27,7 +28,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         compose = true
     }
     composeOptions {
@@ -37,6 +38,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    publishing {
+        publishing {
+            singleVariant("release"){
+                withJavadocJar()
+                withSourcesJar()
+            }
+        }
     }
 }
 
@@ -57,4 +67,18 @@ dependencies {
 
     //coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+}
+
+publishing{
+    publications {
+        register<MavenPublication>("release"){
+            groupId = "com.jms8732"
+            artifactId = "gallery-selector"
+            version = "1.0"
+
+            afterEvaluate{
+                from(components["release"])
+            }
+        }
+    }
 }
