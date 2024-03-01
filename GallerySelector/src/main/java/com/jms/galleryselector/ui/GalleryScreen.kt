@@ -1,12 +1,16 @@
 package com.jms.galleryselector.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -45,6 +49,7 @@ fun GalleryScreen(
 
 @Composable
 private fun GalleryScreen(
+    modifier: Modifier = Modifier,
     selectFrame: @Composable (Gallery.Image) -> Unit,
     images: LazyPagingItems<Gallery.Image>,
     onClick: (Gallery.Image) -> Unit
@@ -52,7 +57,10 @@ private fun GalleryScreen(
     when {
         images.itemCount > 0 -> {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(3)
+                modifier = modifier,
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+                horizontalArrangement = Arrangement.spacedBy(3.dp)
             ) {
                 items(images.itemCount, key = { it }) {
                     images[it]?.let {

@@ -52,10 +52,8 @@ internal class GalleryScreenViewModel constructor(
         return pagingData.map {
             it.copy(
                 selectedOrder = if (selectedIds.contains(it.id)) {
-                    selectedIds.indexOf(
-                        it.id
-                    )
-                } else Constants.NO_ORDER
+                    selectedIds.indexOf(it.id)
+                } else it.selectedOrder
             )
         }
     }
