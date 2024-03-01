@@ -72,9 +72,9 @@ dependencies {
 publishing{
     publications {
         register<MavenPublication>("release"){
-            groupId = "com.jms8732"
-            artifactId = "gallery-selector"
-            version = "1.0"
+            groupId = "com.github.minsuk-jang"
+            artifactId = "GallerySelector"
+            version = "1.0.1"
 
             afterEvaluate{
                 from(components["release"])
