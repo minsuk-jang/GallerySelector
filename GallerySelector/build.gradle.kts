@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.jms.galleryselector"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
