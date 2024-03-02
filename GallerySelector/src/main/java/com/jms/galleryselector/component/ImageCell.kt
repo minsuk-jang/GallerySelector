@@ -1,6 +1,6 @@
 package com.jms.galleryselector.component
 
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.FilterQuality
@@ -22,7 +22,7 @@ internal fun ImageCell(
     image: Gallery.Image
 ) {
     AsyncImage(
-        modifier = modifier.aspectRatio(1f),
+        modifier = modifier.fillMaxSize(),
         model = ImageRequest.Builder(LocalContext.current)
             .crossfade(true)
             .allowHardware(true)

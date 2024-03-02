@@ -3,6 +3,7 @@ package com.jms.galleryselector.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -63,9 +64,11 @@ private fun GalleryScreen(
                 items(images.itemCount, key = { it }) {
                     images[it]?.let {
                         Box(
-                            modifier = Modifier.clickable {
-                                onClick(it)
-                            }
+                            modifier = Modifier
+                                .clickable {
+                                    onClick(it)
+                                }
+                                .aspectRatio(1f)
                         ) {
                             ImageCell(image = it)
 
